@@ -14,6 +14,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.isisaddons.module.pdfbox.dom.PdfBoxModule;
 import org.isisaddons.module.security.SecurityModule;
 
+import org.incode.module.base.services.calendar.CalendarService;
 import org.incode.module.communications.dom.CommunicationsModule;
 import org.incode.module.country.dom.CountryModule;
 import org.incode.module.docrendering.stringinterpolator.dom.StringInterpolatorDocRenderingModule;
@@ -24,7 +25,6 @@ import org.estatio.domlink.EstatioDomainLinkModule;
 import org.estatio.domsettings.EstatioDomainSettingsModule;
 import org.estatio.fixture.EstatioFixtureModule;
 import org.estatio.fixturescripts.EstatioFixtureScriptsModule;
-import org.incode.module.base.services.calendar.CalendarService;
 
 public class EstatioAppManifest implements AppManifest {
 
@@ -154,8 +154,6 @@ public class EstatioAppManifest implements AppManifest {
         withFacetFactory(props, "org.isisaddons.module.security.facets.TenantedAuthorizationFacetFactory");
         withFacetFactory(props, "org.isisaddons.metamodel.paraname8.NamedFacetOnParameterParaname8Factory");
 
-        withDebugMailSmtpSettings(props);
-
         return props;
     }
 
@@ -276,19 +274,6 @@ public class EstatioAppManifest implements AppManifest {
         return props;
     }
 
-    private static Map<String, String> withDebugMailSmtpSettings(final Map<String, String> props) {
-
-        // for testing email (using debugmail.io)
-        // TODO: run the app specifying the password provided by debugmail.io (a GUID):
-        // -Disis.service.email.sender.address=jeroen@stromboli.it -Disis.service.email.sender.password=99999999-9999-9999-9999-999999999999
-        // -Disis.service.email.sender.address=dan@haywood-associates.co.uk -Disis.service.email.sender.password=99999999-9999-9999-9999-999999999999
-
-        props.put("isis.service.email.sender.hostname", "debugmail.io");
-        props.put("isis.service.email.port", "25");
-        props.put("isis.service.email.tls.enabled", "false");
-
-        return props;
-    }
 
     protected static Map<String, String> withInstallFixtures(Map<String, String> props) {
         props.put("isis.persistor.datanucleus.install-fixtures", "true");
